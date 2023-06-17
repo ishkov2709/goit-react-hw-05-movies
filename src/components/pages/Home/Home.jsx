@@ -9,18 +9,20 @@ const Home = () => {
   const location = useLocation();
 
   useEffect(() => {
-    async function getMovies() {
-      try {
-        const {
-          data: { results },
-        } = await fetchApi.getTrendMovies();
-        setTrendMovies([...results]);
-      } catch {
-        console.log(new Error());
+    if (!trendMovies.length) {
+      async function getMovies() {
+        try {
+          const {
+            data: { results },
+          } = await fetchApi.getTrendMovies();
+          setTrendMovies([...results]);
+        } catch {
+          console.log(new Error());
+        }
       }
-    }
 
-    getMovies();
+      getMovies();
+    }
   }, [trendMovies]);
 
   return (
