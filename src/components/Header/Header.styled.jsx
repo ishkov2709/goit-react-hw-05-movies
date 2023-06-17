@@ -11,13 +11,11 @@ export const List = styled.ul`
   display: flex;
   gap: 20px;
 
-  margin-left: 30px;
-
   font-size: 24px;
 `;
 
 export const Item = styled.li`
-  padding: 20px 0;
+  padding: 10px 0;
 `;
 
 export const RouteLink = styled(NavLink)`

@@ -1,27 +1,27 @@
 import { Context } from 'components/App';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { fetchApi } from 'services/fetchMovies';
-import { useLocation, useParams } from 'react-router-dom';
-import parseYear from 'utils/parseYear';
+import { Outlet, useLocation, useParams } from 'react-router-dom';
 import {
   Back,
-  Genres,
-  InfoWrapper,
-  Overview,
-  Poster,
-  Section,
-  Text,
-  Title,
-  TitleBox,
+  HeadInfo,
+  SecInfo,
+  List,
+  Item,
+  Subtitle,
+  AdLink,
+  SecWrapper,
 } from './Movie.styled';
 
 import { BsArrowLeftShort } from 'react-icons/bs';
+import MovieInfo from './MovieInfo/MovieInfo';
 
 const Movie = () => {
   const [movie, setMovie] = useState({});
   const { movieId } = useParams();
   const baseUrlImg = useContext(Context);
   const location = useLocation();
+  const backLinkLocation = useRef(location.state?.from ?? '/');
 
   useEffect(() => {
     async function movieById() {
@@ -40,30 +40,51 @@ const Movie = () => {
     movieById();
   }, [movieId]);
 
+  const percentCalc = value => {
+    return `${Math.round(value * 10)}%`;
+  };
+
+  const parseYear = date => {
+    return new Date(date).getFullYear();
+  };
+
   const { poster_path, title, release_date, vote_average, overview, genres } =
     movie;
 
   return (
     movie.hasOwnProperty('title') && (
-      <Section>
-        <Back to={location.state.from}>
-          <BsArrowLeftShort />
-          Go Back
-        </Back>
-        <TitleBox>
-          <Poster src={baseUrlImg + poster_path} alt={title} width={300} />
-          <InfoWrapper>
-            <Title>
-              {title} ({parseYear(release_date)})
-            </Title>
-            <Text>User Score: {Math.round(vote_average * 10)}%</Text>
-            <Overview>Overview</Overview>
-            <Text>{overview}</Text>
-            <Genres>Genres</Genres>
-            <Text>{[...genres.map(({ name }) => name)].join(' ')}</Text>
-          </InfoWrapper>
-        </TitleBox>
-      </Section>
+      <section className="section">
+        <HeadInfo className="container">
+          <Back to={backLinkLocation.current}>
+            <BsArrowLeftShort />
+            Go Back
+          </Back>
+          <MovieInfo
+            urlImg={baseUrlImg + poster_path}
+            title={title}
+            releaseDate={parseYear(release_date)}
+            voteAverage={percentCalc(vote_average)}
+            overview={overview}
+            genres={genres.map(({ name }) => name).join(' ')}
+          />
+        </HeadInfo>
+        <SecInfo>
+          <SecWrapper className="section">
+            <div className="container">
+              <Subtitle>Additional information</Subtitle>
+              <List>
+                <Item>
+                  <AdLink to="cast">Cast</AdLink>
+                </Item>
+                <Item>
+                  <AdLink to="reviews">Reviews</AdLink>
+                </Item>
+              </List>
+            </div>
+          </SecWrapper>
+          <Outlet />
+        </SecInfo>
+      </section>
     )
   );
 };
