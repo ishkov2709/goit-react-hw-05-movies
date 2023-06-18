@@ -13,7 +13,7 @@ import {
   SecWrapper,
 } from './Movie.styled';
 import { BsArrowLeftShort } from 'react-icons/bs';
-import Loading from 'components/Loading/MainLoader';
+import MainLoader from 'components/Loading/MainLoader';
 import MovieInfo from './MovieInfo';
 
 const Movie = () => {
@@ -92,7 +92,7 @@ const Movie = () => {
               </List>
             </div>
           </SecWrapper>
-          <Suspense fallback={<Loading />}>
+          <Suspense fallback={<MainLoader />}>
             <Outlet />
           </Suspense>
         </SecInfo>
