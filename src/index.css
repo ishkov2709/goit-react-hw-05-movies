@@ -17,6 +17,10 @@ code {
   box-sizing: border-box;
 }
 
+img {
+  display: block;
+}
+
 ul,
 li {
   margin: 0;

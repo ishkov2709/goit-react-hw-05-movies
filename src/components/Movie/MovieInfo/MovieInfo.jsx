@@ -18,7 +18,7 @@ const MovieInfo = ({
 }) => {
   return (
     <Wrapper>
-      <Poster src={urlImg} alt={title} width={300} />
+      <Poster src={urlImg} alt={title} width={260} />
       <InfoBox>
         <Title>
           {title} ({releaseDate})

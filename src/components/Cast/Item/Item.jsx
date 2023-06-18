@@ -1,9 +1,11 @@
-import { ItemList, Img, Text } from './Item.styled';
+import { ItemList, Img, Text, ImgWrapper } from './Item.styled';
 
 const Item = ({ name, character, urlImg }) => {
   return (
     <ItemList>
-      <Img src={urlImg} alt={name} width={220} height={330} />
+      <ImgWrapper>
+        <Img src={urlImg} alt={name} width={180} />
+      </ImgWrapper>
       <Text>{name}</Text>
       <Text>Character: {character}</Text>
     </ItemList>

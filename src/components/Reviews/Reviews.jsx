@@ -26,14 +26,13 @@ const Reviews = () => {
 
   const { results } = reviews;
 
-  if (!results?.length) {
-    return <p>We don t have ant reviews for this movie</p>;
-  }
   return (
     <section className="section">
       <div className="container">
+        {!results?.length && <p>We don t have ant reviews for this movie</p>}
+
         <List>
-          {results.map(({ id, author, content }) => (
+          {results?.map(({ id, author, content }) => (
             <Item key={id} author={author} content={content} />
           ))}
         </List>

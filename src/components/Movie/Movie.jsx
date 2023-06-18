@@ -1,5 +1,5 @@
 import { Context } from 'components/App';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { Suspense, useContext, useEffect, useRef, useState } from 'react';
 import { fetchApi } from 'services/fetchMovies';
 import { Outlet, useLocation, useParams } from 'react-router-dom';
 import {
@@ -15,6 +15,7 @@ import {
 
 import { BsArrowLeftShort } from 'react-icons/bs';
 import MovieInfo from './MovieInfo/MovieInfo';
+import Loading from 'components/Loading/Loading';
 
 const Movie = () => {
   const [movie, setMovie] = useState({});
@@ -82,7 +83,9 @@ const Movie = () => {
               </List>
             </div>
           </SecWrapper>
-          <Outlet />
+          <Suspense fallback={<Loading />}>
+            <Outlet />
+          </Suspense>
         </SecInfo>
       </section>
     )
