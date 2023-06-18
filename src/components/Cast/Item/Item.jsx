@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { ItemList, Img, Text, ImgWrapper } from './Item.styled';
 
 const Item = ({ name, character, urlImg }) => {
@@ -13,3 +14,9 @@ const Item = ({ name, character, urlImg }) => {
 };
 
 export default Item;
+
+Item.propTypes = {
+  name: PropTypes.string,
+  character: PropTypes.string,
+  urlImg: PropTypes.string,
+};

@@ -12,10 +12,9 @@ import {
   AdLink,
   SecWrapper,
 } from './Movie.styled';
-
 import { BsArrowLeftShort } from 'react-icons/bs';
-import MovieInfo from './MovieInfo/MovieInfo';
-import Loading from 'components/Loading/Loading';
+import Loading from 'components/Loading/MainLoader';
+import MovieInfo from './MovieInfo';
 
 const Movie = () => {
   const [movie, setMovie] = useState({});
@@ -41,12 +40,22 @@ const Movie = () => {
     movieById();
   }, [movieId]);
 
+  const compilePosterURL = path => {
+    return path
+      ? baseUrlImg + path
+      : 'https://t3.ftcdn.net/jpg/05/90/75/40/360_F_590754013_CoFRYEcAmLREfB3k8vjzuyStsDbMAnqC.jpg';
+  };
+
   const percentCalc = value => {
     return `${Math.round(value * 10)}%`;
   };
 
   const parseYear = date => {
     return new Date(date).getFullYear();
+  };
+
+  const fromArrayToString = arr => {
+    return arr.map(({ name }) => name).join(' ');
   };
 
   const { poster_path, title, release_date, vote_average, overview, genres } =
@@ -61,12 +70,12 @@ const Movie = () => {
             Go Back
           </Back>
           <MovieInfo
-            urlImg={baseUrlImg + poster_path}
+            urlImg={compilePosterURL(poster_path)}
             title={title}
             releaseDate={parseYear(release_date)}
             voteAverage={percentCalc(vote_average)}
             overview={overview}
-            genres={genres.map(({ name }) => name).join(' ')}
+            genres={fromArrayToString(genres)}
           />
         </HeadInfo>
         <SecInfo>

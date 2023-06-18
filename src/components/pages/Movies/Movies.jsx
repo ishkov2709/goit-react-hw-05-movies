@@ -2,10 +2,11 @@ import { useEffect, useState } from 'react';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import { fetchApi } from 'services/fetchMovies';
 import { Btn, Form, Label, List, Search } from './Movies.styled';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import MovieLitsItem from 'components/MovieListItem/MovieListItem';
-import { MagnifyingGlass } from 'react-loader-spinner';
+import { errorNotity } from 'utils/errorNotify';
+import MoviesLitsItem from 'components/MoviesLitsItem';
+import SearchLoader from 'components/Loading/SearchLoader';
 
 const Status = {
   IDLE: 'idle',
@@ -35,16 +36,7 @@ const Movies = () => {
         setStatus(Status.RESOLVED);
       } catch {
         console.error(new Error());
-        toast.error('📽️ Your request has no result. Please try again!', {
-          position: 'top-right',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'colored',
-        });
+        errorNotity();
         setStatus(Status.REJECTED);
       }
     }
@@ -72,23 +64,12 @@ const Movies = () => {
           <Btn type="submit">Search</Btn>
         </Form>
 
-        {status === Status.PANDING && (
-          <MagnifyingGlass
-            visible={true}
-            height="80"
-            width="80"
-            ariaLabel="MagnifyingGlass-loading"
-            wrapperStyle={{}}
-            wrapperClass="MagnifyingGlass-wrapper"
-            glassColor="#c0efff"
-            color="#e15b64"
-          />
-        )}
+        {status === Status.PANDING && <SearchLoader />}
 
         {status === Status.RESOLVED && (
           <List>
             {movies.map(({ id, title }) => (
-              <MovieLitsItem
+              <MoviesLitsItem
                 key={id}
                 id={id}
                 title={title}
@@ -98,20 +79,7 @@ const Movies = () => {
           </List>
         )}
 
-        {status === Status.REJECTED && (
-          <ToastContainer
-            position="top-right"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="colored"
-          />
-        )}
+        {status === Status.REJECTED && <ToastContainer />}
       </div>
     </section>
   );

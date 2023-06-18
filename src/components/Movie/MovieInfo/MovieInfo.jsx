@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import {
   Genres,
   InfoBox,
@@ -34,3 +35,12 @@ const MovieInfo = ({
 };
 
 export default MovieInfo;
+
+MovieInfo.propTypes = {
+  urlImg: PropTypes.string,
+  title: PropTypes.string,
+  releaseDate: PropTypes.number,
+  voteAverage: PropTypes.string,
+  overview: PropTypes.string,
+  genres: PropTypes.string,
+};

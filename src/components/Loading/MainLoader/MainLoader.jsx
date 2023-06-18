@@ -1,7 +1,7 @@
 import { ProgressBar } from 'react-loader-spinner';
-import { Loadbox, Overlay } from './Loading.styled';
+import { Loadbox, Overlay } from './MainLoader.styled';
 
-const Loading = () => {
+const MainLoader = () => {
   return (
     <Overlay>
       <Loadbox>
@@ -19,4 +19,4 @@ const Loading = () => {
   );
 };
 
-export default Loading;
+export default MainLoader;

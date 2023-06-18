@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchApi } from 'services/fetchMovies';
 import { CastBox, List } from './Cast.styled';
-import Item from './Item/Item';
+import Item from './Item';
 
 const Cast = () => {
   const { movieId } = useParams();
@@ -24,6 +24,12 @@ const Cast = () => {
     getCredits();
   }, [movieId]);
 
+  const compileImgURL = path => {
+    return path
+      ? baseUrlImg + path
+      : 'https://icon-library.com/images/unknown-person-icon/unknown-person-icon-27.jpg';
+  };
+
   return (
     <section className="section">
       <CastBox className="container">
@@ -33,11 +39,7 @@ const Cast = () => {
               key={credit_id}
               name={name}
               character={character}
-              urlImg={
-                profile_path
-                  ? baseUrlImg + profile_path
-                  : 'https://icon-library.com/images/unknown-person-icon/unknown-person-icon-27.jpg'
-              }
+              urlImg={compileImgURL(profile_path)}
             />
           ))}
         </List>

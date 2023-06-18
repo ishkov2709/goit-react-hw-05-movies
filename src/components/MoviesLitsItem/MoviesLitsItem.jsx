@@ -1,7 +1,7 @@
 import { BiCameraMovie } from 'react-icons/bi';
-import { Item, ItemLink } from './MovieListItem.styled';
+import { Item, ItemLink } from './MoviesLitsItem.styled';
 
-const MovieLitsItem = ({ id, title, location }) => {
+const MoviesLitsItem = ({ id, title, location }) => {
   return (
     <Item>
       <BiCameraMovie style={{ marginRight: '8px' }} />
@@ -12,4 +12,4 @@ const MovieLitsItem = ({ id, title, location }) => {
   );
 };
 
-export default MovieLitsItem;
+export default MoviesLitsItem;
