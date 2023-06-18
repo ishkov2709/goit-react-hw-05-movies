@@ -47,5 +47,3 @@ export const Btn = styled.button`
     color: white;
   }
 `;
-
-export const List = styled.ul``;

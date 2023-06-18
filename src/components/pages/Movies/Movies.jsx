@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import { fetchApi } from 'services/fetchMovies';
-import { Btn, Form, Label, List, Search } from './Movies.styled';
+import { Btn, Form, Label, Search } from './Movies.styled';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { errorNotity } from 'utils/errorNotify';
-import MoviesLitsItem from 'components/MoviesLitsItem';
 import SearchLoader from 'components/Loading/SearchLoader';
+import MoviesList from 'components/MoviesList/MoviesList';
 
 const Status = {
   IDLE: 'idle',
@@ -67,16 +67,7 @@ const Movies = () => {
         {status === Status.PANDING && <SearchLoader />}
 
         {status === Status.RESOLVED && (
-          <List>
-            {movies.map(({ id, title }) => (
-              <MoviesLitsItem
-                key={id}
-                id={id}
-                title={title}
-                location={location}
-              />
-            ))}
-          </List>
+          <MoviesList movies={movies} location={location} />
         )}
 
         {status === Status.REJECTED && <ToastContainer />}

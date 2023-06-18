@@ -1,23 +1,34 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { fetchApi } from 'services/fetchMovies';
-import { List, Title } from './Home.styled';
-import MovieLitsItem from 'components/MoviesLitsItem';
+import { Title } from './Home.styled';
+import MoviesList from 'components/MoviesList/MoviesList';
+
+const Status = {
+  IDLE: 'idle',
+  PANDING: 'panding',
+  RESOLVED: 'resolved',
+  REJECTED: 'rejected',
+};
 
 const Home = () => {
-  const [trendMovies, setTrendMovies] = useState([]);
+  const [trendMovies, setTrendMovies] = useState(null);
+  const [status, setStatus] = useState(Status.IDLE);
   const location = useLocation();
 
   useEffect(() => {
-    if (!trendMovies.length) {
+    if (!trendMovies?.length) {
       async function getMovies() {
+        setStatus(Status.PANDING);
         try {
           const {
             data: { results },
           } = await fetchApi.getTrendMovies();
           setTrendMovies([...results]);
+          setStatus(Status.RESOLVED);
         } catch {
           console.log(new Error());
+          setStatus(Status.REJECTED);
         }
       }
 
@@ -25,15 +36,15 @@ const Home = () => {
     }
   }, [trendMovies]);
 
+  if (!trendMovies) return;
+
   return (
     <section className="section">
       <div className="container">
         <Title>Trending day</Title>
-        <List>
-          {trendMovies.map(({ id, title }) => (
-            <MovieLitsItem key={id} id={id} title={title} location={location} />
-          ))}
-        </List>
+        {status === Status.RESOLVED && (
+          <MoviesList movies={trendMovies} location={location} />
+        )}
       </div>
     </section>
   );

@@ -17,7 +17,7 @@ import MainLoader from 'components/Loading/MainLoader';
 import MovieInfo from './MovieInfo';
 
 const Movie = () => {
-  const [movie, setMovie] = useState({});
+  const [movie, setMovie] = useState(null);
   const { movieId } = useParams();
   const baseUrlImg = useContext(Context);
   const location = useLocation();
@@ -58,11 +58,13 @@ const Movie = () => {
     return arr.map(({ name }) => name).join(' ');
   };
 
+  if (!movie) return;
+
   const { poster_path, title, release_date, vote_average, overview, genres } =
     movie;
 
   return (
-    movie.hasOwnProperty('title') && (
+    movie && (
       <section className="section">
         <HeadInfo className="container">
           <Back to={backLinkLocation.current}>
