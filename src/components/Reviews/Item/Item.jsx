@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { Author, ItemList, Text } from './Item.styled';
 
 const Item = ({ author, content }) => {
@@ -10,3 +11,8 @@ const Item = ({ author, content }) => {
 };
 
 export default Item;
+
+Item.propTypes = {
+  author: PropTypes.string,
+  content: PropTypes.string,
+};

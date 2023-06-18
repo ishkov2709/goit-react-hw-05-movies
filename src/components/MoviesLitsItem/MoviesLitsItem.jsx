@@ -1,5 +1,6 @@
 import { BiCameraMovie } from 'react-icons/bi';
 import { Item, ItemLink } from './MoviesLitsItem.styled';
+import PropTypes from 'prop-types';
 
 const MoviesLitsItem = ({ id, title, location }) => {
   return (
@@ -13,3 +14,9 @@ const MoviesLitsItem = ({ id, title, location }) => {
 };
 
 export default MoviesLitsItem;
+
+MoviesLitsItem.propTypes = {
+  id: PropTypes.number,
+  title: PropTypes.string,
+  location: PropTypes.object,
+};
